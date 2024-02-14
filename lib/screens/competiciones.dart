@@ -10,6 +10,7 @@ const double _matcheHeight = 80;
 const double _matchWidth = 140;
 const double _matchRightPadding = 20;
 const double _minMargin = 5;
+int currentTeamsBuilt = 0;
 
 class NFLStackOverflowPage extends StatelessWidget {
   const NFLStackOverflowPage({Key? key}) : super(key: key);
@@ -19,7 +20,14 @@ class NFLStackOverflowPage extends StatelessWidget {
     return const Scaffold(
       body: _PageContent(
         matchupsLenghtList: [6, 4, 2, 1], // Enfrontaments en cascada
-        teamsToMatch: ["T1", "T2", "T3", "T4", "T5", "T6"],
+        teamsToMatch: [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6"
+        ], //API Model TEAM filled w database
         //TODO: RANDOM GEN FOR INDEX, DISCARD TWO EACH PROGRESSION, STORE THEM IN A ORDERED LIST, DO NOT REPEAT TEAMS (DELETE IT FROM LIST WHEN THEY LOOSE),
         //BOTTON PARA GENERAR MATCHUPS CON SETSTATE() I GUESS
       ),
@@ -50,7 +58,7 @@ class _PageContentState extends State<_PageContent> {
     controller = ScrollController();
     populateVerticalMargins();
     populateBreakPoints();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       calculateVerticalMargins();
       calculateBreakpoints();
     });
@@ -159,10 +167,11 @@ class _PageContentState extends State<_PageContent> {
   }
 }
 
+//TEAMS
 class MatchWidget extends StatelessWidget {
   const MatchWidget({Key? key}) : super(key: key);
 
-  @override //TEAMS
+  @override
   Widget build(BuildContext context) {
     return Container(
       height: _matcheHeight,
